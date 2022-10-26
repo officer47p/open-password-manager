@@ -22,12 +22,12 @@ my_parser.add_argument('service',
 my_parser.add_argument('-i',
                        '--index',
                        action='store', type=int, default=0,
-                       help="The index of the password for that service")
+                       help="The index of the password for that service (defaults to 0)")
 
 my_parser.add_argument('-l',
                        '--length',
                        action='store', type=int, default=16,
-                       help="The length of the generated password")
+                       help="The length of the generated password (defaults to 16)")
 
 args = my_parser.parse_args()
 
