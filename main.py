@@ -31,22 +31,31 @@ my_parser.add_argument('-l',
 
 args = my_parser.parse_args()
 
+
+def get_password(master_password: str, service_name: str, index=0, length=16):
+    m_master_password = hashlib.sha512()
+    m_master_password.update(master_password.encode())
+    password = m_master_password.digest()
+
+    m_service = hashlib.sha512()
+    m_service.update(service_name.encode())
+    service = m_service.digest()
+
+    m = hashlib.sha512()
+
+    m.update(password)
+    m.update(service)
+    m.update(str(index).encode())
+
+    byte_array = m.digest()
+    base64_password = base64.b85encode(byte_array)
+
+    return base64_password.decode()[:length]
+
+
 master_password = args.password
 service = args.service
 index = args.index
+length = args.length
 
-m_master_password = hashlib.sha512()
-m_master_password.update(master_password.encode())
-
-m_service = hashlib.sha512()
-m_service.update(service.encode())
-
-m = hashlib.sha512()
-m.update(m_master_password.digest())
-m.update(m_service.digest())
-m.update(str(index).encode())
-
-byte_array = m.digest()
-
-base64_password = base64.b85encode(byte_array)
-print(base64_password.decode()[:args.length])
+print(get_password(master_password, service, index=0, length=16))
