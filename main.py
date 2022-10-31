@@ -58,4 +58,4 @@ service = args.service
 index = args.index
 length = args.length
 
-print(get_password(master_password, service, index=0, length=16))
+print(get_password(master_password, service, index, length))
